@@ -128,8 +128,8 @@ vector<string> decoupage(string ligne){
 void recherche(string parametre, string precision, string precision2 ="none") {
     int nombre;
     if (parametre == "titre") {nombre = 1;}
-    if (parametre == "date debut") {nombre = 2;}
-    if (parametre == "date fin") {nombre = 3;}
+    if (parametre == "date_debut") {nombre = 2;}
+    if (parametre == "date_fin") {nombre = 3;}
     if (parametre == "id") {nombre = 0;}
     if (parametre == "priority") {nombre = 6;}
     ifstream newflux("Taskmanager.txt");
@@ -140,15 +140,15 @@ void recherche(string parametre, string precision, string precision2 ="none") {
             commande = decoupage(ligne);
             if (commande[nombre] == precision and (precision2=="none" or precision2=="exact")) {
                 cout << ligne << endl;}
-            if (precision2 !="none") {
-                cout << commande[nombre] << endl;
-                if (precision2=="avant" and strtoint(commande[nombre])<= strtoint(precision)) {
-                    cout<< ligne<< endl;}
-                if (precision2=="apres" and strtoint(commande[nombre])>= strtoint(precision)){
-                    cout<< ligne<< endl;}
+            if (precision2 !="none" and precision2!="exact") {
+                cout<< "commande non finalisée"<<endl;
+                //if (precision2=="avant" and strtoint(commande[nombre])<= strtoint(precision)) {
+                   //cout<< ligne<< endl;}
+                //if (precision2=="apres" and strtoint(commande[nombre])>= strtoint(precision)){
+                  //  cout<< ligne<< endl;}
             }
         }
-    }
+    }   
     else {
         cout << "ERREUR: Impossible d'ouvrir le fichier." << endl;
     }       
@@ -157,7 +157,7 @@ newflux.close();
 
 
 int main () {
-    std::cout<< 3<<std::endl;
+    
     //std::string const nomFichier("/Users/gasparddeturckheim/desktop/c++/Taskmanager.txt");
     //std::ofstream monFlux(nomFichier.c_str(), std::ios::app);
 
@@ -180,7 +180,7 @@ int main () {
         }
         if(action == "recherche") {
             string ligne;
-            cout<< "paramètre ? (titre, date debut, date fin, priority) " <<endl;
+            cout<< "paramètre ? (titre, date_debut, date_fin, priority) " <<endl;
             getline(cin,ligne);
             if(ligne == "priority") {
                 cout<< "préciser ? (high, normal, classified) " <<endl;
@@ -194,7 +194,7 @@ int main () {
                 getline(cin,paramètre);
                 recherche(ligne,paramètre);
             }
-            if(ligne == "date debut") {
+            if(ligne == "date_debut" or "date_fin") {
                 cout<< "date? (format aaaa/mm/jj)" <<endl;
                 string paramètre;
                 getline(cin,paramètre);
@@ -204,22 +204,7 @@ int main () {
                 recherche(ligne,paramètre,precision);
             }
         }
-    }
-    
-    int e;
-    e = 19990505;
-    string com;
-    string cal;
-    com = inttostr(e);
-    
-    
-
-    
-    
-    
-    //std::string ligne;
-    //getline(monFlux, ligne); //On lit une ligne complète
-    //std::cout<<ligne <<std::endl;
+    }    
 
     return 0;
 }
